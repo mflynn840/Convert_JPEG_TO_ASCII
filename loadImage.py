@@ -5,9 +5,9 @@ import math
 
 
 
-def getImageAsList(path):
+def getImageAsList(path, size):
     image = Image.open(path)
-    image = image.resize((250, 250))
+    image = image.resize((size[0], size[1]))
 
 
     height = image.size[0]
@@ -33,9 +33,9 @@ def convertTo2d(data, height, width):
 
 
 
-def getImageAs2dArray(path):
+def getImageAs2dArray(path, ASCII_size):
 
-    first = getImageAsList(path)
+    first = getImageAsList(path, ASCII_size)
     return convertTo2d(first[0], first[1], first[2])
 
 
@@ -88,7 +88,19 @@ def convertBrightnessToAscii(brightness):
 
 
 path = r'C:\Users\micha\Desktop\ASCII image generator\.venv\duck.jpg'
-data = getImageAs2dArray(path)
+
+print("Enter the dimesnions for the generated ASCII image")
+ASCII_size = (-1, -1)
+while(ASCII_size[0] == -1):
+    try:
+        ASCII_size = (int(input("Enter a height: ")), int(input("Enter a width: ")))
+    except:
+        print("ERROR, not an integer")
+
+
+
+
+data = getImageAs2dArray(path, ASCII_size)
 brightness_matrix = convertRGB_to_brightness(data)
 asciiMatrix = convertBrightnessToAscii(brightness_matrix)
 
